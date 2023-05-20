@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <title>Listar</title>
+    <title>Herança</title>
 </head>
+
 <body>
     <?php
-    //Incluindo arquivo
-        require './Usuarios.php';
-        //Instanciando a classe Usuarios
-        //Criando objeto $listar_usuarios
-        $listar_usuarios = new Usuarios();
-        //Instanciando o método listar
-        $result_usuarios = $listar_usuarios->listar();
+    require './Cliente.php';
+    require './ClientePessoaFisica.php';
+    require './ClientePessoaJuridica.php';
+    $cliente = new Cliente();
+    $cliente->logradouro = "Avenida Presidente Vargas - A";
+    $cliente->bairro = "Centro";
+    $msg = $cliente->verEndereco();
+    echo $msg;
+    echo "<hr>";
 
-        //Laço de repetição que percorre todos os usuários e exibe os dados cada usuário
-        foreach($result_usuarios as $row_usuario){
-            extract($row_usuario);
-            echo "ID do usuario: $id <br>";
-            echo "Nome do usuario: $nome <br>";
-            echo "E-mail do usuario: $email <br><br>";
+    $clientePF = new ClientePessoaFisica();
+    $clientePF->logradouro = "Avenida Presidente Vargas - B";
+    $clientePF->bairro = "Centro";
+    $clientePF->nome = "Marielly";
+    $clientePF->cpf = 12345678912;
+    $msgPf = $clientePF->verInformacaoUsuario();
+    echo $msgPf;
+    echo "<hr>";
 
-        }
+    $clientePJ = new ClientePessoaJuridica();
+    $clientePJ->logradouro = "Avenida Presidente Vargas - C";
+    $clientePJ->bairro = "Centro";
+    $clientePJ->nomeFantasia = "L&M";
+    $clientePJ->cnpj = 12345678912345;
+    $msgPj = $clientePJ->verInformacaoEmpresa();
+    echo $msgPj;
+    echo "<hr>";
     ?>
 </body>
+
 </html>
