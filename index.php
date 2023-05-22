@@ -8,33 +8,21 @@
 
 <body>
     <?php
-    require './Cliente.php';
-    require './ClientePessoaFisica.php';
-    require './ClientePessoaJuridica.php';
-    $cliente = new Cliente();
-    $cliente->logradouro = "Avenida Presidente Vargas - A";
-    $cliente->bairro = "Centro";
-    $msg = $cliente->verEndereco();
-    echo $msg;
-    echo "<hr>";
+    require './Cheque.php';
+    require './ChequeComum.php';
+    require './ChequeEspecial.php';
+    //A classe abstrata NÃO pode ser instanciada!!
+    //$cheque = new Cheque(207.27, 'comum');
+    //$msg = $cheque->verValor();
+    //echo $msg;
 
-    $clientePF = new ClientePessoaFisica();
-    $clientePF->logradouro = "Avenida Presidente Vargas - B";
-    $clientePF->bairro = "Centro";
-    $clientePF->nome = "Marielly";
-    $clientePF->cpf = 12345678912;
-    $msgPf = $clientePF->verInformacaoUsuario();
-    echo $msgPf;
-    echo "<hr>";
+    $chequeComum = new ChequeComum(307.37, 'comum');
+    $msgChequeComum = $chequeComum->calcularJuro();
+    echo $msgChequeComum;
 
-    $clientePJ = new ClientePessoaJuridica();
-    $clientePJ->logradouro = "Avenida Presidente Vargas - C";
-    $clientePJ->bairro = "Centro";
-    $clientePJ->nomeFantasia = "L&M";
-    $clientePJ->cnpj = 12345678912345;
-    $msgPj = $clientePJ->verInformacaoEmpresa();
-    echo $msgPj;
-    echo "<hr>";
+    $chequeEspecial = new ChequeEspecial(407.37, 'especial');
+    $msgChequeEspecial = $chequeEspecial->calcularJuro();
+    echo $msgChequeEspecial;
     ?>
 </body>
 
