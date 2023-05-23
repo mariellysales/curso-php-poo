@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Herança</title>
+    <title>Classe e método abstrato</title>
 </head>
 
 <body>
