@@ -3,26 +3,26 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Herança</title>
+    <title>Listar</title>
 </head>
 
 <body>
     <?php
-    require './Cheque.php';
-    require './ChequeComum.php';
-    require './ChequeEspecial.php';
-    //A classe abstrata NÃO pode ser instanciada!!
-    //$cheque = new Cheque(207.27, 'comum');
-    //$msg = $cheque->verValor();
-    //echo $msg;
+    require './Conn.php';
+    require './ListUsers.php';
 
-    $chequeComum = new ChequeComum(307.37, 'comum');
-    $msgChequeComum = $chequeComum->calcularJuro();
-    echo $msgChequeComum;
+    $listUsers = new ListUsers();
+    $result_users = $listUsers->list();
 
-    $chequeEspecial = new ChequeEspecial(407.37, 'especial');
-    $msgChequeEspecial = $chequeEspecial->calcularJuro();
-    echo $msgChequeEspecial;
+    foreach ($result_users as $row_user) {
+        //var_dump($row_user);
+        extract($row_user);
+
+        echo "ID: $id <br>";
+        echo "Nome: $nome <br>";
+        echo "E-mail: $email <br>";
+        echo "<hr>";
+    }
     ?>
 </body>
 

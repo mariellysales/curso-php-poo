@@ -1,25 +1,24 @@
 <?php
 
-class Conn
+abstract class Conn
 {
-    public $host = "localhost";
-    public $user = "root";
-    public $pass = "";
-    public $dbname = "cadastro";
-    public $port = 3306;
-    public $connect = null;
+    public string $db = "mysql";
+    public string $host = "localhost";
+    public string $user = "root";
+    public string $pass = "";
+    public string $dbname = "cadastro";
+    public int $port = 3306;
+    public object $connect;
 
-    public function conectar(){
-        //O try pode gerar uma excessão
-        //O catch trata a excessão, exibe mensagem de erro ou toma ação apropriada para lidar com a situação
-        try{
-            $this->connect = new PDO("mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->dbname, $this->user, $this->pass);
-            echo "Conexão realizada com sucesso!<br>";
+    public function connect()
+    {
+        try {
+            $this->connect = new PDO($this->db . ':host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname, $this->user, $this->pass);
+            //echo"Conexão com banco de dados realizada com sucesso!<br>";
             return $this->connect;
-        }catch(Exception $err){
-
-            echo "ERRO: Conexão não realizada. Erro gerado: " . $err;
-            return false;
+        } catch (Exception $err) {
+            die('ERRO: Por favor, tente novamente. Caso o problema persista, entre em contato com o administrador adm@empresa.com.');
+            //echo"Erro: conexão com banco de dados não realizada. Erro gerado " . $err->getMessage();
         }
     }
 }
