@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -7,11 +10,20 @@
 </head>
 
 <body>
-    <?php
-    require './Conn.php';
-    require './ListUsers.php';
+    <a href="index.php">Listar</a><br>
+    <a href="create.php">Cadastrar</a><br>
 
-    $listUsers = new ListUsers();
+    <h1>Listar Usuários</h1>
+    <?php
+    if (isset($_SESSION['msg'])) {
+        echo $_SESSION['msg'];
+        unset($_SESSION['msg']);
+    }
+
+    require './Conn.php';
+    require './User.php';
+
+    $listUsers = new User();
     $result_users = $listUsers->list();
 
     foreach ($result_users as $row_user) {

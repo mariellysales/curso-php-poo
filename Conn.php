@@ -10,7 +10,7 @@ abstract class Conn
     public int $port = 3306;
     public object $connect;
 
-    public function connect()
+    public function connectDb()
     {
         try {
             $this->connect = new PDO($this->db . ':host=' . $this->host . ';port=' . $this->port . ';dbname=' . $this->dbname, $this->user, $this->pass);
