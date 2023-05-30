@@ -33,6 +33,7 @@ session_start();
         echo "ID: $id <br>";
         echo "Nome: $nome <br>";
         echo "E-mail: $email <br>";
+        echo "<a href='view.php?id=$id'>Visualizar</a><br>";
         echo "<hr>";
     }
     ?>
