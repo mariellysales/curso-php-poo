@@ -38,7 +38,7 @@ $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
         $edituser->formData = $formData;
         $value = $edituser->edit();
         if ($value) {
-            $_SESSION['msg'] = "<p style='color: green;'>Erro: Usuário editado com sucesso!.</p>";
+            $_SESSION['msg'] = "<p style='color: green;'>Usuário editado com sucesso!.</p>";
             header("Location: index.php");
         } else {
             echo "<p style='color: #f00;'>Erro: Usuário não encontrado.</p>";
