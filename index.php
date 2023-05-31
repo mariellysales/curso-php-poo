@@ -34,6 +34,7 @@ session_start();
         echo "Nome: $nome <br>";
         echo "E-mail: $email <br>";
         echo "<a href='view.php?id=$id'>Visualizar</a><br>";
+        echo "<a href='edit.php?id=$id'>Editar</a><br>";
         echo "<hr>";
     }
     ?>

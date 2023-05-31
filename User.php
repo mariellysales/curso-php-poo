@@ -43,4 +43,21 @@ class User extends Conn
         $value = $result_user->fetch();
         return $value;
     }
+    public function edit()
+    {
+        var_dump($this->formData);
+        $this->conn = $this->connectDb();
+        $query_user = "UPDATE users SET nome=:nome, email=:email, modified=NOW() WHERE id=:id";
+        $edit_user = $this->conn->prepare($query_user);
+        $edit_user->bindParam(':nome', $this->formData['nome']);
+        $edit_user->bindParam(':email', $this->formData['email']);
+        $edit_user->bindParam(':id', $this->formData['id']);
+        $edit_user->execute();
+
+        if ($edit_user->rowCount()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
