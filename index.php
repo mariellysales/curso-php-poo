@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-    <title>Interface</title>
+    <title>Atributo estático</title>
 </head>
+
 <body>
     <?php
-require './ICurso.php';
-require './CursoPosGraduacao.php';
-require './CursoGraduacao.php';
+    require './Disciplina.php';
 
-$cursoPosGraduacao = new CursoPosGraduacao();
-echo $cursoPosGraduacao->disciplina("Desenvolvimento Web");
-echo $cursoPosGraduacao->professor("Cesar");
+    //Acessa o atributo sem criar o objeto
+    echo "Média: " . Disciplina::$media . "<br><hr>";
 
-$cursoGraduacao = new CursoGraduacao();
-echo $cursoGraduacao->disciplina("Programação Orientada a Objeto");
-echo $cursoGraduacao->professor("Leonardo")
+    $disciplina = new Disciplina("Aline", 3, 5);
+    echo $disciplina->situacao();
+
+    echo Disciplina::situacaoAluno(9);
     ?>
+
 </body>
+
 </html>
