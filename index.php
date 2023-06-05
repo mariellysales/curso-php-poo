@@ -8,6 +8,10 @@
 
 <body>
     <?php
+    /* Link para documentação
+    https://www.php-fig.org/psr/
+    https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md
+    https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc.md */
     require "./Funcionario.php";
     require "./Bonus.php";
     $funcionario = new Funcionario();
