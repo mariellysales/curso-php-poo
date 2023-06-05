@@ -13,6 +13,10 @@
     $funcionario->nome = "Geovana";
     $funcionario->salario = 7961.75;
     echo $funcionario->verSalario();
+    /*Atributo e método privado não pode ser acessado fora da classe
+    $funcionario->salarioConvertido = "72,16"
+
+    $funcionario->converterSalario();*/
 
     ?>
 </body>
