@@ -6,7 +6,7 @@ class Funcionario
 
     public function verSalario(): string
     {
-        return "O(a) funcionário(a) {$this->nome} tem o salário R$ {$this->converterSalario($this->salario)}";
+        return "O(a) funcionário(a) {$this->nome} tem o salário R$ {$this->converterSalario()}";
     }
 
     public function converterSalario(): string
