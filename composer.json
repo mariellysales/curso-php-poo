@@ -1,0 +1,16 @@
+{
+    "description": "Marielly Projeto PHP OO",
+    "authors": [
+        {
+            "name": "Marielly",
+            "email": "mariellysales@icloud.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Sts\\": "app/sts",
+            "Core\\": "core"
+        }
+    },
+    "require": {}
+}
