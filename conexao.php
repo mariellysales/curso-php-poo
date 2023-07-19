@@ -3,7 +3,7 @@
 $host = "localhost";
 $user = "root";
 $pass = "";
-$dbname = "mvc";
+$dbname = "cadastro";
 $port = 3306;
 
 try {

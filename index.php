@@ -14,19 +14,16 @@ include_once "conexao.php";
     <h2>Listar usuários</h2>
 
     <?php
-    $query_usuario = "SELECT id, nome, email, sits_usuario_id, niveis_acesso_id FROM usuarios ORDER BY nome ASC";
-    $result_usuario = $conn->prepare($query_usuario);
-    $result_usuario->execute();
+    $query_acessos = "SELECT DISTINCT id, nome_aula, usuario_id FROM acessos WHERE usuario_id=5";
+    $result_acessos = $conn->prepare($query_acessos);
+    $result_acessos->execute();
 
-    while ($row_usuario = $result_usuario->fetch(PDO::FETCH_ASSOC)) {
+    while ($row_acessos = $result_acessos->fetch(PDO::FETCH_ASSOC)) {
         //imprimir através da chave do array
-        extract($row_usuario);
+        extract($row_acessos);
 
-        echo "ID: $id <br>";
-        echo "Nome: $nome <br>";
-        echo "E-mail: $email <br>";
-        echo "Id da situação: $sits_usuario_id <br>";
-        echo "Id do nível de acesso: $niveis_acesso_id <br>";
+        echo "ID do usuário: $usuario_id <br>";
+        echo "Aula: $nome_aula <br>";
         echo "<hr>";
     }
     ?>
