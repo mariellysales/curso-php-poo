@@ -6,35 +6,73 @@ include_once "conexao.php";
 
 <head>
     <meta charset="UTF-8">
-    <title>LIMIT e OFFSET</title>
+    <title>WHERE</title>
     <link rel="shortcut icon" href="images/favicon.ico">
 </head>
 
 <body>
-    <h2>Listar usuários com LIMIT</h2>
+    <h2>Visualizar usuários pelo id</h2>
     <?php
-    $query_usuarios = "SELECT id, nome, email FROM usuarios LIMIT 2";
-    $result_usuarios = $conn->prepare($query_usuarios);
-    $result_usuarios->execute();
+    $query_usuario = "SELECT id, nome, email FROM usuarios WHERE id = 14 LIMIT 1";
+    $result_usuario = $conn->prepare($query_usuario);
+    $result_usuario->execute();
 
-    while ($row_usuario = $result_usuarios->fetch(PDO::FETCH_ASSOC)) {
-        extract($row_usuario);
-        echo "ID: $id<br>";
-        echo "Nome: $nome<br>";
-        echo "Email: $email<br>";
+    //Atribui o objeto $result_usuario usando o método fetch
+    //O fetch percorrer os resultados do conjunto linha por linha e retorna como um array
+    //PDO::FETCH_ASSOC configura o método retornando em forma de array associativo
+    $row_usuario = $result_usuario->fetch(PDO::FETCH_ASSOC);
+    //imprimir através da chave do array
+    extract($row_usuario);
+
+    echo "ID: $id <br>";
+    echo "Nome: $nome <br>";
+    echo "E-mail: $email <br>";
+    echo "<hr>";
+
+    echo "<h2>Pesquisar usuário pelo e-mail</h2>";
+    $query_usuario_b = "SELECT id, nome, email FROM usuarios WHERE email = 'cesar@celke.com.br' LIMIT 1";
+    $result_usuario_b = $conn->prepare($query_usuario_b);
+    $result_usuario_b->execute();
+
+    $row_usuario_b = $result_usuario_b->fetch(PDO::FETCH_ASSOC);
+    extract($row_usuario_b);
+
+    echo "ID: $id <br>";
+    echo "Nome: $nome <br>";
+    echo "E-mail: $email <br>";
+    echo "<hr>";
+
+    echo "<h2>Pesquisar usuário ativo</h2>";
+    $query_usuario_c = "SELECT id, nome, email, sits_usuario_id FROM usuarios WHERE sits_usuario_id = 1";
+    $result_usuario_c = $conn->prepare($query_usuario_c);
+    $result_usuario_c->execute();
+
+    while ($row_usuario_c = $result_usuario_c->fetch(PDO::FETCH_ASSOC)) {
+        extract($row_usuario_c);
+
+        echo "ID: $id <br>";
+        echo "Nome: $nome <br>";
+        echo "E-mail: $email <br>";
+        echo "Id da situação: $sits_usuario_id <br>";
+        echo "<hr>";
+    }
+    echo "<h2>Pesquisar usuários com nível de acesso Administrador</h2>";
+    $query_usuario_d = "SELECT id, nome, email, sits_usuario_id, niveis_acesso_id FROM usuarios WHERE niveis_acesso_id = 2";
+    $result_usuario_d = $conn->prepare($query_usuario_d);
+    $result_usuario_d->execute();
+
+    while ($row_usuario_d = $result_usuario_d->fetch(PDO::FETCH_ASSOC)) {
+        extract($row_usuario_d);
+
+        echo "ID: $id <br>";
+        echo "Nome: $nome <br>";
+        echo "E-mail: $email <br>";
+        echo "Id da situação: $sits_usuario_id <br>";
+        echo "Id do nível de acesso: $niveis_acesso_id <br>";
+        echo "<hr>";
     }
 
-    echo "<h2>Listar usuários com LIMIT e OFFSET</h2>";
-    $query_usuarios_b = "SELECT id, nome, email FROM usuarios LIMIT 2 OFFSET 1";
-    $result_usuarios_b = $conn->prepare($query_usuarios_b);
-    $result_usuarios_b->execute();
 
-    while ($row_usuario_b = $result_usuarios_b->fetch(PDO::FETCH_ASSOC)) {
-        extract($row_usuario_b);
-        echo "ID: $id<br>";
-        echo "Nome: $nome<br>";
-        echo "Email: $email<br>";
-    }
     ?>
 </body>
 
