@@ -6,7 +6,7 @@ include_once "conexao.php";
 
 <head>
     <meta charset="UTF-8">
-    <title>Formulário com INSERT</title>
+    <title>Preenchendo campo SELECT com informações do banco de dados</title>
     <link rel="shortcut icon" href="images/favicon.ico">
 </head>
 
@@ -79,22 +79,52 @@ include_once "conexao.php";
         }
         ?>
         <input type="password" name="senha" placeholder="Senha do usuário" value="<?php echo $senha; ?>" required /><br><br>
+
         <label>Situação:</label>
         <?php
-        $situacao = "";
-        if (isset($dados['sists_usuario_id'])) {
-            $situacao = $dados['sists_usuario_id'];
-        }
+        $query_sists_usuario = "SELECT id, nome FROM sists_usuarios ORDER BY nome ASC";
+        $result_sists_usuario = $conn->prepare($query_sists_usuario);
+        $result_sists_usuario->execute();
         ?>
-        <input type="number" name="sists_usuario_id" placeholder="Situação do usuário" value="<?php echo $situacao; ?>" required /><br><br>
+        <!-- Caixa de seleção -->
+        <select name="sists_usuario_id" required>
+            <!-- Define uma única opção dentro de um elemento da caixa de seleção que podeá ser escolhida -->
+            <option value="">Selecione</option>
+            <?php
+            //para ler mais de um registro
+            while ($row_sist_usuario = $result_sists_usuario->fetch(PDO::FETCH_ASSOC)) {
+                $select_sit_usuario = "";
+                //Verifica se o existe um valor nos dados do formulário e se uma opçao foi selecionada previamente
+                if (isset($dados['sists_usuario_id']) and ($dados['sists_usuario_id'] == $row_sist_usuario['id'])) {
+                    //aparece a opção pré-selecionada no formulário caso a condição seja verdadeira
+                    $select_sit_usuario = "selected";
+                }
+                //Obtem o valor do registro atual tornando-a pré-selecionada
+                echo "<option value=' " . $row_sist_usuario['id'] . "' $select_sit_usuario>" . $row_sist_usuario['nome'] . " </option>";
+            }
+            ?>
+        </select>
+        <br><br>
+
         <label>Nível de acecsso:</label>
         <?php
-        $nivel_acesso = "";
-        if (isset($dados['niveis_acesso_id'])) {
-            $nivel_acesso = $dados['niveis_acesso_id'];
-        }
+        $query_niveis_acesso = "SELECT id, nome FROM niveis_acessos ORDER BY nome ASC";
+        $result_niveis_acesso = $conn->prepare($query_niveis_acesso);
+        $result_niveis_acesso->execute();
         ?>
-        <input type="number" name="niveis_acesso_id" placeholder="Nível de acecsso do usuário" value="<?php echo $nivel_acesso; ?>" required /><br><br>
+        <select name="niveis_acesso_id" required>
+            <option value="">Selecione</option>
+            <?php
+            while ($row_niveis_acesso = $result_niveis_acesso->fetch(PDO::FETCH_ASSOC)) {
+                $select_niveis_acesso = "";
+                if (isset($dados['niveis_acesso_id']) and ($dados['niveis_acesso_id'] == $row_niveis_acesso['id'])) {
+                    $select_niveis_acesso = "selected";
+                }
+                echo "<option value=' " . $row_niveis_acesso['id'] . "' $select_niveis_acesso>" . $row_niveis_acesso['nome'] . " </option>";
+            }
+            ?>
+        </select>
+        <br><br>
         <input type="submit" value="Cadastrar" name="SendCadUsuario" />
 
     </form>
