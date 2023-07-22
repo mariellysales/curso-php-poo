@@ -31,8 +31,6 @@ include_once "conexao.php";
     }
     ?>
 
-    </form>
-
 </body>
 
 </html>
