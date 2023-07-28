@@ -13,54 +13,20 @@ include_once "conexao.php";
 <body>
     <h2>Listar usuários</h2>
     <?php
-    //Obtém dados do formulário através do método post e retorna como string
-    $dados = filter_input_array(INPUT_POST, FILTER_DEFAULT);
-    //var_dump($dados);
-    ?>
-    <form method="POST" action="">
-        <?php
-        // Mantem a data utilizada no formulário
-        $data_inicio = "";
-        if (isset($dados['data_inicio'])) {
-            $data_inicio = $dados['data_inicio'];
-        }
-        ?>
-        <label>Data de início</label>
-        <input type="date" name="data_inicio" value="<?php echo $data_inicio; // Mantem a data utilizada no formulário
-                                                        ?>"><br><br>
+    //com AS
+    //$query_usuarios = "SELECT usr.id AS id_usr, usr.nome AS nome_usr, usr.email FROM usuarios AS usr ORDER BY usr.id DESC LIMIT 40";
+    //sem o AS
+    $query_usuarios = "SELECT usr.id id_usr, usr.nome nome_usr, usr.email FROM usuarios usr ORDER BY usr.id DESC LIMIT 40";
+    $result_usuarios = $conn->prepare($query_usuarios);
+    $result_usuarios->execute();
 
-        <?php
-        $data_final = "";
-        if (isset($dados['data_final'])) {
-            $data_final = $dados['data_final'];
-        }
-        ?>
-        <label>Data final</label>
-        <input type="date" name="data_final" value="<?php echo $data_final; ?>"><br><br>
+    while ($row_usuario = $result_usuarios->fetch(PDO::FETCH_ASSOC)) {
+        extract($row_usuario);
 
-        <input type="submit" value="Pesquisar" name="PesqData"><br><br>
-    </form>
-    <?php
-    //Caso contenha dados no formulário, a query é executada filtrando as informações do banco de dados
-    if (!empty($dados['PesqData'])) {
-        $query_usuarios = "SELECT id, nome, email, created FROM usuarios WHERE created BETWEEN :data_inicio AND :data_final";
-        $result_usuarios = $conn->prepare($query_usuarios);
-        //Define o que os parâmetros irão receber
-        $result_usuarios->bindParam(':data_inicio', $dados['data_inicio']);
-        $result_usuarios->bindParam(':data_final', $dados['data_final']);
-        $result_usuarios->execute();
-
-        //loop de repetição que mostrará os dados de um usuario em cada linha
-        while ($row_usuario = $result_usuarios->fetch(PDO::FETCH_ASSOC)) {
-            extract($row_usuario);
-
-            echo "ID: $id <br>";
-            echo "Nome: $nome <br>";
-            echo "E-mail: $email <br>";
-            //Implementa conversão de datas
-            echo "Data cadastro: " . date('d/m/y', strtotime($created)) . "<br>";
-            echo "<hr>";
-        }
+        echo "ID: $id_usr <br>";
+        echo "Nome: $nome_usr <br>";
+        echo "E-mail: $email <br>";
+        echo "<hr>";
     }
     ?>
 </body>
