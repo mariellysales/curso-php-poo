@@ -6,34 +6,26 @@ include_once "conexao.php";
 
 <head>
     <meta charset="UTF-8">
-    <title>AVG</title>
+    <title>GROUP BY</title>
     <link rel="shortcut icon" href="images/favicon.ico">
 </head>
 
 <body>
-    <h2>Média paga nos cursos</h2>
+    <h2>Aulas acessadas</h2>
     <?php
-    //Com casa decimal
-    $query_media_preco = "SELECT AVG(preco) AS media_preco, created FROM inscricoes_cursos";
-    $result_media_preco = $conn->prepare($query_media_preco);
-    $result_media_preco->execute();
+    $usuario = 1;
+    $query_acesso_aulas = "SELECT aul.id AS id_aula, aul.nome, ace.usuario_id, COUNT(ace.aula_id) AS qnt_acessos FROM aulas AS aul INNER JOIN acessos_aulas AS ace ON ace.aula_id=aul.id WHERE ace.usuario_id = $usuario GROUP BY ace.aula_id";
+    $result_acesso_aulas = $conn->prepare($query_acesso_aulas);
+    $result_acesso_aulas->execute();
 
-    $row_media_preco = $result_media_preco->fetch(PDO::FETCH_ASSOC);
-    extract($row_media_preco);
-    $media_preco_format = number_format($media_preco, 2, ',', '.');
-    echo "Media de preço: $media_preco_format <br>";
-    echo "<hr>";
+    while ($row_acesso_aulas = $result_acesso_aulas->fetch(PDO::FETCH_ASSOC)) {
+        //var_dump($row_acesso_aulas);
+        extract($row_acesso_aulas);
+        echo "Nome da aula: $nome <br>";
+        echo "Quantidades de acesso: $qnt_acessos <br>";
+        echo "<hr>";
+    }
 
-    //Sem casa decimal
-    $query_media_preco_b = "SELECT format(AVG(preco), '#') AS media_preco_b, created FROM inscricoes_cursos";
-    $result_media_preco_b = $conn->prepare($query_media_preco_b);
-    $result_media_preco_b->execute();
-
-    $row_media_preco_b = $result_media_preco_b->fetch(PDO::FETCH_ASSOC);
-    extract($row_media_preco_b);
-    $media_preco_format_b = number_format($media_preco_b, 2, ',', '.');
-    echo "Media de preço: $media_preco_format_b <br>";
-    echo "<hr>";
     ?>
 
 </body>
