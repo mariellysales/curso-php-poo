@@ -6,14 +6,14 @@ include_once "conexao.php";
 
 <head>
     <meta charset="UTF-8">
-    <title>INNER JOIN</title>
+    <title>LEFT JOIN</title>
     <link rel="shortcut icon" href="images/favicon.ico">
 </head>
 
 <body>
     <h2>Listar usuários</h2>
     <?php
-    $query_usuarios = "SELECT usr.id AS id_usr, usr.nome AS nome_usr, usr.email, sit.id AS id_sit, sit.nome AS nome_sit, nvs.id AS id_nvs, nvs.nome AS nome_nvs FROM usuarios as usr INNER JOIN sists_usuarios AS sit ON sit.id=usr.sists_usuario_id INNER JOIN niveis_acessos AS nvs ON nvs.id=usr.niveis_acesso_id ORDER BY usr.id DESC LIMIT 40";
+    $query_usuarios = "SELECT usr.id AS id_usr, usr.nome AS nome_usr, usr.email, cont.telefone, cont.celular, ende.logradouro, ende.numero, ende.bairro, ende.cidade FROM usuarios as usr LEFT JOIN contatos AS cont ON cont.usuario_id=usr.id LEFT JOIN enderecos AS ende ON ende.usuario_id=usr.id ORDER BY usr.id DESC LIMIT 40";
     $result_usuarios = $conn->prepare($query_usuarios);
     $result_usuarios->execute();
 
@@ -23,10 +23,9 @@ include_once "conexao.php";
         echo "ID do usuário: $id_usr <br>";
         echo "Nome do usuário: $nome_usr <br>";
         echo "E-mail: $email <br>";
-        echo "ID da Situação: $id_sit <br>";
-        echo "Situação do usuário: $nome_sit <br>";
-        echo "ID do nível de acesso: $id_nvs <br>";
-        echo "Nível de acesso: $nome_nvs <br>";
+        echo "Telefone do usuário: $telefone <br>";
+        echo "Celular do usuário: $celular <br>";
+        echo "Endereço: $logradouro, $numero, $bairro - $cidade <br>";
         echo "<hr>";
     }
     ?>
